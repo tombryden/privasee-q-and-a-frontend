@@ -1,9 +1,9 @@
 "use client";
 
 import { graphql } from "@/gql";
-import { columns } from "./records-data-table-columns";
+import { columns } from "./components/records-data-table/columns";
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
-import RecordsDataTable from "./records-data-table";
+import RecordsDataTable from "./components/records-data-table/records-data-table";
 
 const ALL_RECORDS_QUERY = graphql(`
   query AllRecords {

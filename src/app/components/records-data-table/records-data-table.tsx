@@ -32,7 +32,8 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { AllRecordsQuery } from "@/gql/graphql";
-import AddQuestionDialog from "./add-question-dialog";
+import AddQuestionDialog from "../add-question-dialog";
+import AssignButton from "../assign-button";
 
 interface DataTableProps {
   data: AllRecordsQuery["records"];
@@ -105,6 +106,8 @@ export default function RecordsDataTable({ data, columns }: DataTableProps) {
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
+
+          <AssignButton />
 
           <AddQuestionDialog />
         </div>

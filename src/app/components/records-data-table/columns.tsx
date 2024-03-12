@@ -125,8 +125,7 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
               Copy record ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>Edit question / answer</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
