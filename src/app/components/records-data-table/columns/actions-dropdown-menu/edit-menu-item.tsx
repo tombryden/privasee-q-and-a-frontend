@@ -67,7 +67,7 @@ export default function EditMenuItem({
         updateQuestionOrAnswerInput: {
           recordId: record._recordId,
           question: formData.question,
-          answer: formData.answer || "",
+          answer: formData.answer || undefined,
         },
       },
       onCompleted: () => {
@@ -75,6 +75,7 @@ export default function EditMenuItem({
 
         toast(`Successfully updated record ID: ${record._recordId}`);
       },
+      onError: () => {},
     });
   });
 
@@ -91,7 +92,7 @@ export default function EditMenuItem({
         <DialogHeader>
           <DialogTitle>Edit Question / Answer</DialogTitle>
           <DialogDescription>
-            Enter modifications and click &apos;Save Changes &apos;.
+            Enter modifications and click &apos;Save Changes&apos;.
           </DialogDescription>
         </DialogHeader>
 

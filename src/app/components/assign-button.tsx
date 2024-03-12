@@ -71,6 +71,7 @@ export default function AssignButton({ selectedRows }: AssignButtonProps) {
           reset();
         }, 500);
       },
+      onError: () => {},
     });
   });
   return (
