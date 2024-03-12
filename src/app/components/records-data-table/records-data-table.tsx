@@ -99,6 +99,7 @@ export default function RecordsDataTable({ data, columns }: DataTableProps) {
                       onCheckedChange={(value) =>
                         column.toggleVisibility(!!value)
                       }
+                      onSelect={(e) => e.preventDefault()} // don't auto close on select
                     >
                       {column.columnDef.meta as string}
                     </DropdownMenuCheckboxItem>
