@@ -54,7 +54,7 @@ export type Record = {
   _companyId: Scalars['ID']['output'];
   _recordId: Scalars['ID']['output'];
   answer?: Maybe<Scalars['String']['output']>;
-  assignedTo?: Maybe<Scalars['String']['output']>;
+  assignee?: Maybe<Scalars['String']['output']>;
   companyName: Scalars['String']['output'];
   createdAt: Scalars['DateTimeISO']['output'];
   createdBy: Scalars['String']['output'];
@@ -75,8 +75,8 @@ export type CreateRecord2Mutation = { __typename?: 'Mutation', createRecord: { _
 export type AllRecordsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllRecordsQuery = { __typename?: 'Query', records: Array<{ __typename?: 'Record', _recordId: string, question: string, answer?: string | null, createdBy: string, createdAt: any, assignedTo?: string | null }> };
+export type AllRecordsQuery = { __typename?: 'Query', records: Array<{ __typename?: 'Record', _recordId: string, question: string, answer?: string | null, createdBy: string, createdAt: any, assignee?: string | null }> };
 
 
 export const CreateRecord2Document = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createRecord2"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createRecordInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateRecordInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createRecord"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createRecordInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createRecordInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_recordId"}}]}}]}}]} as unknown as DocumentNode<CreateRecord2Mutation, CreateRecord2MutationVariables>;
-export const AllRecordsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllRecords"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"records"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_recordId"}},{"kind":"Field","name":{"kind":"Name","value":"question"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"assignedTo"}}]}}]}}]} as unknown as DocumentNode<AllRecordsQuery, AllRecordsQueryVariables>;
+export const AllRecordsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllRecords"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"records"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_recordId"}},{"kind":"Field","name":{"kind":"Name","value":"question"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"assignee"}}]}}]}}]} as unknown as DocumentNode<AllRecordsQuery, AllRecordsQueryVariables>;

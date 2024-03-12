@@ -21,7 +21,7 @@ const ALL_RECORDS_QUERY = graphql(`
       answer
       createdBy
       createdAt
-      assignedTo
+      assignee
     }
   }
 `);
@@ -64,7 +64,7 @@ const MainTable = () => {
                     <TableCell>{record.answer}</TableCell>
                     <TableCell>{record.createdBy}</TableCell>
                     <TableCell>{record.createdAt}</TableCell>
-                    <TableCell>{record.assignedTo}</TableCell>
+                    <TableCell>{record.assignee}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
