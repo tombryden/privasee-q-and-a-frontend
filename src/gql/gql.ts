@@ -15,6 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  mutation createRecord2($createRecordInput: CreateRecordInput!) {\n    createRecord(createRecordInput: $createRecordInput) {\n      _recordId\n    }\n  }\n": types.CreateRecord2Document,
     "\n  mutation assignRecords($assignRecordInput: AssignRecordInput!) {\n    assignRecords(assignRecordInput: $assignRecordInput) {\n      _recordId\n      assignee\n    }\n  }\n": types.AssignRecordsDocument,
+    "\n  mutation updateQuestionOrAnswer(\n    $updateQuestionOrAnswerInput: UpdateQuestionAnswerInput!\n  ) {\n    updateQuestionOrAnswer(\n      updateQuestionOrAnswerInput: $updateQuestionOrAnswerInput\n    ) {\n      _recordId\n      question\n      answer\n    }\n  }\n": types.UpdateQuestionOrAnswerDocument,
     "\n  query AllRecords {\n    records {\n      _recordId\n      question\n      answer\n      createdBy\n      createdAt\n      assignee\n    }\n  }\n": types.AllRecordsDocument,
 };
 
@@ -40,6 +41,10 @@ export function graphql(source: "\n  mutation createRecord2($createRecordInput: 
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation assignRecords($assignRecordInput: AssignRecordInput!) {\n    assignRecords(assignRecordInput: $assignRecordInput) {\n      _recordId\n      assignee\n    }\n  }\n"): (typeof documents)["\n  mutation assignRecords($assignRecordInput: AssignRecordInput!) {\n    assignRecords(assignRecordInput: $assignRecordInput) {\n      _recordId\n      assignee\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation updateQuestionOrAnswer(\n    $updateQuestionOrAnswerInput: UpdateQuestionAnswerInput!\n  ) {\n    updateQuestionOrAnswer(\n      updateQuestionOrAnswerInput: $updateQuestionOrAnswerInput\n    ) {\n      _recordId\n      question\n      answer\n    }\n  }\n"): (typeof documents)["\n  mutation updateQuestionOrAnswer(\n    $updateQuestionOrAnswerInput: UpdateQuestionAnswerInput!\n  ) {\n    updateQuestionOrAnswer(\n      updateQuestionOrAnswerInput: $updateQuestionOrAnswerInput\n    ) {\n      _recordId\n      question\n      answer\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

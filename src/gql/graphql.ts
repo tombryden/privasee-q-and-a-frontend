@@ -35,6 +35,7 @@ export type Mutation = {
   assignRecords: Array<Record>;
   /** Create a new question/answer record */
   createRecord: Record;
+  updateQuestionOrAnswer: Record;
 };
 
 
@@ -45,6 +46,11 @@ export type MutationAssignRecordsArgs = {
 
 export type MutationCreateRecordArgs = {
   createRecordInput: CreateRecordInput;
+};
+
+
+export type MutationUpdateQuestionOrAnswerArgs = {
+  updateQuestionOrAnswerInput: UpdateQuestionAnswerInput;
 };
 
 export type Query = {
@@ -76,6 +82,12 @@ export type Record = {
   updatedBy: Scalars['String']['output'];
 };
 
+export type UpdateQuestionAnswerInput = {
+  answer?: InputMaybe<Scalars['String']['input']>;
+  question?: InputMaybe<Scalars['String']['input']>;
+  recordId: Scalars['ID']['input'];
+};
+
 export type CreateRecord2MutationVariables = Exact<{
   createRecordInput: CreateRecordInput;
 }>;
@@ -90,6 +102,13 @@ export type AssignRecordsMutationVariables = Exact<{
 
 export type AssignRecordsMutation = { __typename?: 'Mutation', assignRecords: Array<{ __typename?: 'Record', _recordId: string, assignee?: string | null }> };
 
+export type UpdateQuestionOrAnswerMutationVariables = Exact<{
+  updateQuestionOrAnswerInput: UpdateQuestionAnswerInput;
+}>;
+
+
+export type UpdateQuestionOrAnswerMutation = { __typename?: 'Mutation', updateQuestionOrAnswer: { __typename?: 'Record', _recordId: string, question: string, answer?: string | null } };
+
 export type AllRecordsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -98,4 +117,5 @@ export type AllRecordsQuery = { __typename?: 'Query', records: Array<{ __typenam
 
 export const CreateRecord2Document = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createRecord2"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createRecordInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateRecordInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createRecord"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createRecordInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createRecordInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_recordId"}}]}}]}}]} as unknown as DocumentNode<CreateRecord2Mutation, CreateRecord2MutationVariables>;
 export const AssignRecordsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"assignRecords"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"assignRecordInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AssignRecordInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"assignRecords"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"assignRecordInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"assignRecordInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_recordId"}},{"kind":"Field","name":{"kind":"Name","value":"assignee"}}]}}]}}]} as unknown as DocumentNode<AssignRecordsMutation, AssignRecordsMutationVariables>;
+export const UpdateQuestionOrAnswerDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateQuestionOrAnswer"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateQuestionOrAnswerInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateQuestionAnswerInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateQuestionOrAnswer"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"updateQuestionOrAnswerInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateQuestionOrAnswerInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_recordId"}},{"kind":"Field","name":{"kind":"Name","value":"question"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}}]}}]}}]} as unknown as DocumentNode<UpdateQuestionOrAnswerMutation, UpdateQuestionOrAnswerMutationVariables>;
 export const AllRecordsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllRecords"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"records"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_recordId"}},{"kind":"Field","name":{"kind":"Name","value":"question"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"assignee"}}]}}]}}]} as unknown as DocumentNode<AllRecordsQuery, AllRecordsQueryVariables>;
