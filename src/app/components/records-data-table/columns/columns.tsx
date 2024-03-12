@@ -5,6 +5,30 @@ import { AllRecordsQuery } from "@/gql/graphql";
 import { ColumnDef } from "@tanstack/react-table";
 import ActionsDropdownMenu from "./actions-dropdown-menu/actions-dropdown-menu";
 import { formatDateTime } from "@/utils/date";
+import { Combobox } from "../../../../components/ui/combobox";
+
+const frameworks = [
+  {
+    value: "next.js",
+    label: "Next.js",
+  },
+  {
+    value: "sveltekit",
+    label: "SvelteKit",
+  },
+  {
+    value: "nuxt.js",
+    label: "Nuxt.js",
+  },
+  {
+    value: "remix",
+    label: "Remix",
+  },
+  {
+    value: "astro",
+    label: "Astro",
+  },
+];
 
 export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
   {
@@ -89,7 +113,30 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
   },
   {
     accessorKey: "assignee",
-    header: "Assignee",
+    header: ({ table }) => {
+      const distinctAssignees = table
+        .getCoreRowModel()
+        .rows.filter((row) => row.getValue("assignee") !== null)
+        .map((row) => row.getValue("assignee") as string)
+        .filter(
+          (assignee, index, thisArray) => thisArray.indexOf(assignee) === index
+        );
+
+      const comboValues = distinctAssignees.map((assignee) => ({
+        value: assignee.toLowerCase(),
+        label: assignee,
+      }));
+
+      return (
+        <Combobox
+          searchingFor="assignees"
+          comboValues={comboValues}
+          selectAction={(value) =>
+            table.setColumnFilters([{ id: "assignee", value }])
+          }
+        />
+      );
+    },
     meta: "Assignee",
   },
   {
