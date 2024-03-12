@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { AllRecordsQuery } from "@/gql/graphql";
 import { ColumnDef } from "@tanstack/react-table";
 import ActionsDropdownMenu from "./actions-dropdown-menu/actions-dropdown-menu";
+import { formatDateTime } from "@/utils/date";
 
 export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
   {
@@ -64,7 +65,7 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
     accessorKey: "createdAt",
     header: "Created At",
     meta: "Created At",
-    // cell: ({ row }) => <div>{row.getValue("createdAt")}</div>,
+    cell: ({ row }) => <div>{formatDateTime(row.getValue("createdAt"))}</div>,
   },
   {
     accessorKey: "assignee",
