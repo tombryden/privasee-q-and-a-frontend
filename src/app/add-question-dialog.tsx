@@ -79,9 +79,8 @@ export default function AddQuestionDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="mb-10">
-          <Plus className="mr-2 w-5 h-5" />
-          Add Question
+        <Button>
+          Add Question <Plus className="ml-2 h-4 w-4" />
         </Button>
       </DialogTrigger>
 

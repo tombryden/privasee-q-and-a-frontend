@@ -1,11 +1,33 @@
-import Container from "@/components/container";
-import MainTable from "@/components/pages/home/main-table/main-table";
+"use client";
 
-export default function Home() {
+import { graphql } from "@/gql";
+import { columns } from "./records-data-table-columns";
+import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import RecordsDataTable from "./records-data-table";
+
+const ALL_RECORDS_QUERY = graphql(`
+  query AllRecords {
+    records {
+      _recordId
+      question
+      answer
+      createdBy
+      createdAt
+      assignee
+    }
+  }
+`);
+
+export default function DemoPage() {
+  const { data: allRecordsQuery } = useSuspenseQuery(ALL_RECORDS_QUERY, {
+    context: { fetchOptions: { cache: "no-store" } },
+  });
+
   return (
-    <Container>
-      <h1 className="text-5xl mt-10 mb-10">Q&As</h1>
-      <MainTable />
-    </Container>
+    <div className="container mx-auto py-10">
+      {allRecordsQuery.records && (
+        <RecordsDataTable columns={columns} data={allRecordsQuery.records} />
+      )}
+    </div>
   );
 }
