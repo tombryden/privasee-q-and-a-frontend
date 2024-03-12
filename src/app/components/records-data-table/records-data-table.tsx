@@ -34,6 +34,7 @@ import { useState } from "react";
 import { AllRecordsQuery } from "@/gql/graphql";
 import AssignButton from "../assign-button";
 import AddQuestionButton from "../add-question-button";
+import { cn } from "@/lib/utils";
 
 interface DataTableProps {
   data: AllRecordsQuery["records"];
@@ -128,7 +129,19 @@ export default function RecordsDataTable({ data, columns }: DataTableProps) {
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className={cn(
+                        header.column.id === "question" ||
+                          header.column.id === "questionDescription" ||
+                          header.column.id === "answer"
+                          ? "w-[400px]"
+                          : undefined,
+                        header.column.id === "_recordId"
+                          ? "w-[200px]"
+                          : undefined
+                      )}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(

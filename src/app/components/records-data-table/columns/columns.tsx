@@ -74,9 +74,7 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
     header: "Question",
     meta: "Question",
     cell: ({ row }) => (
-      <div className="whitespace-pre-wrap w-[400px]">
-        {row.getValue("question")}
-      </div>
+      <div className="whitespace-pre-wrap">{row.getValue("question")}</div>
     ),
   },
   {
@@ -84,7 +82,7 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
     header: "Question Description",
     meta: "Question Description",
     cell: ({ row }) => (
-      <div className="whitespace-pre-wrap w-[400px]">
+      <div className="whitespace-pre-wrap">
         {row.getValue("questionDescription")}
       </div>
     ),
@@ -94,9 +92,7 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
     header: "Answer",
     meta: "Answer",
     cell: ({ row }) => (
-      <div className="whitespace-pre-wrap w-[400px]">
-        {row.getValue("answer")}
-      </div>
+      <div className="whitespace-pre-wrap">{row.getValue("answer")}</div>
     ),
   },
   {
@@ -214,21 +210,6 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
     },
     meta: "Properties",
   },
-  //   {
-  //     accessorKey: "email",
-  //     header: ({ column }) => {
-  //       return (
-  //         <Button
-  //           variant="ghost"
-  //           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-  //         >
-  //           Email
-  //           <ArrowUpDown className="ml-2 h-4 w-4" />
-  //         </Button>
-  //       );
-  //     },
-  //     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
-  //   },
   {
     id: "actions",
     enableHiding: false,
