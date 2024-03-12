@@ -1,12 +1,21 @@
 "use client";
 
-import { ApolloLink, HttpLink } from "@apollo/client";
+import { ApolloLink, HttpLink, from } from "@apollo/client";
+import { onError } from "@apollo/client/link/error";
 import {
   ApolloNextAppProvider,
   NextSSRInMemoryCache,
   NextSSRApolloClient,
   SSRMultipartLink,
 } from "@apollo/experimental-nextjs-app-support/ssr";
+import { toast } from "sonner";
+
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) graphQLErrors.forEach(({ message }) => toast(message));
+
+  if (networkError)
+    toast("Sorry! Try again later, we're having some issues...");
+});
 
 // have a function to create a client for you
 function makeClient() {
@@ -33,9 +42,10 @@ function makeClient() {
             new SSRMultipartLink({
               stripDefer: true,
             }),
+            errorLink,
             httpLink,
           ])
-        : httpLink,
+        : from([errorLink, httpLink]),
   });
 }
 
