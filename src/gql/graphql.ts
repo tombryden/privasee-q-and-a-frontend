@@ -18,6 +18,11 @@ export type Scalars = {
   DateTimeISO: { input: any; output: any; }
 };
 
+export type AssignRecordInput = {
+  assignee: Scalars['String']['input'];
+  recordIds: Array<Scalars['ID']['input']>;
+};
+
 export type CreateRecordInput = {
   answer?: InputMaybe<Scalars['String']['input']>;
   assignee?: InputMaybe<Scalars['String']['input']>;
@@ -27,8 +32,14 @@ export type CreateRecordInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  assignRecords: Array<Record>;
   /** Create a new question/answer record */
   createRecord: Record;
+};
+
+
+export type MutationAssignRecordsArgs = {
+  assignRecordInput: AssignRecordInput;
 };
 
 
@@ -72,6 +83,13 @@ export type CreateRecord2MutationVariables = Exact<{
 
 export type CreateRecord2Mutation = { __typename?: 'Mutation', createRecord: { __typename?: 'Record', _recordId: string } };
 
+export type AssignRecordsMutationVariables = Exact<{
+  assignRecordInput: AssignRecordInput;
+}>;
+
+
+export type AssignRecordsMutation = { __typename?: 'Mutation', assignRecords: Array<{ __typename?: 'Record', _recordId: string, assignee?: string | null }> };
+
 export type AllRecordsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -79,4 +97,5 @@ export type AllRecordsQuery = { __typename?: 'Query', records: Array<{ __typenam
 
 
 export const CreateRecord2Document = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createRecord2"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createRecordInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateRecordInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createRecord"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createRecordInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createRecordInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_recordId"}}]}}]}}]} as unknown as DocumentNode<CreateRecord2Mutation, CreateRecord2MutationVariables>;
+export const AssignRecordsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"assignRecords"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"assignRecordInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AssignRecordInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"assignRecords"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"assignRecordInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"assignRecordInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_recordId"}},{"kind":"Field","name":{"kind":"Name","value":"assignee"}}]}}]}}]} as unknown as DocumentNode<AssignRecordsMutation, AssignRecordsMutationVariables>;
 export const AllRecordsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllRecords"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"records"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_recordId"}},{"kind":"Field","name":{"kind":"Name","value":"question"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"assignee"}}]}}]}}]} as unknown as DocumentNode<AllRecordsQuery, AllRecordsQueryVariables>;
