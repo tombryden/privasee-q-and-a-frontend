@@ -26,7 +26,7 @@ interface ComboValues {
 interface ComboboxProps {
   comboValues: ComboValues[];
   searchingFor: string;
-  selectAction: (value: string) => void;
+  selectAction: (selectedValues: string[]) => void;
 }
 
 export function Combobox({
@@ -35,7 +35,7 @@ export function Combobox({
   selectAction,
 }: ComboboxProps) {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
+  const [values, setValues] = useState<Array<string>>([]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -44,7 +44,7 @@ export function Combobox({
           variant="ghost"
           role="combobox"
           aria-expanded={open}
-          className={value ? "border border-primary" : ""}
+          className={values.length > 0 ? "border border-primary" : ""}
         >
           Assignee <ArrowDown className="ml-2 h-4 w-4" />
         </Button>
@@ -59,16 +59,22 @@ export function Combobox({
                 key={comboValue.value}
                 value={comboValue.value}
                 onSelect={(currentValue) => {
-                  setValue(currentValue === value ? "" : currentValue);
+                  const newValuesArray = values.includes(currentValue)
+                    ? values.filter((val) => val !== currentValue)
+                    : [...values, currentValue];
+                  // setValue(currentValue === value ? "" : currentValue);
+                  setValues(newValuesArray);
                   // setOpen(false);
 
-                  selectAction(currentValue);
+                  selectAction(newValuesArray);
                 }}
               >
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    value === comboValue.value ? "opacity-100" : "opacity-0"
+                    values.includes(comboValue.value)
+                      ? "opacity-100"
+                      : "opacity-0"
                   )}
                 />
                 {comboValue.label}

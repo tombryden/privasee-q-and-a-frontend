@@ -113,6 +113,8 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
   },
   {
     accessorKey: "assignee",
+    filterFn: (row, columnId, filterVal) =>
+      filterVal.includes(row.getValue(columnId)),
     header: ({ table }) => {
       const distinctAssignees = table
         .getCoreRowModel()
@@ -131,8 +133,14 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
         <Combobox
           searchingFor="assignees"
           comboValues={comboValues}
-          selectAction={(value) =>
-            table.setColumnFilters([{ id: "assignee", value }])
+          selectAction={
+            (selectedValues) =>
+              table.setColumnFilters([
+                {
+                  id: "assignee",
+                  value: selectedValues.length > 0 ? selectedValues : undefined,
+                },
+              ]) // custom filter function
           }
         />
       );
