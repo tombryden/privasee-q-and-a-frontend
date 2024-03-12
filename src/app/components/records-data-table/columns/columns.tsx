@@ -36,6 +36,16 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
     // cell: ({ row }) => <div>{row.getValue("_recordId")}</div>,
   },
   {
+    accessorKey: "_companyId",
+    header: "Company ID",
+    meta: "Company ID",
+  },
+  {
+    accessorKey: "companyName",
+    header: "Company Name",
+    meta: "Company Name",
+  },
+  {
     accessorKey: "question",
     header: "Question",
     meta: "Question",
@@ -59,7 +69,6 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
     accessorKey: "createdBy",
     header: "Created By",
     meta: "Created By",
-    // cell: ({ row }) => <div>{row.getValue("createdBy")}</div>,
   },
   {
     accessorKey: "createdAt",
@@ -68,10 +77,30 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
     cell: ({ row }) => <div>{formatDateTime(row.getValue("createdAt"))}</div>,
   },
   {
+    accessorKey: "updatedBy",
+    header: "Updated By",
+    meta: "Updated By",
+  },
+  {
+    accessorKey: "updatedAt",
+    header: "Updated At",
+    meta: "Updated At",
+    cell: ({ row }) => <div>{formatDateTime(row.getValue("updatedAt"))}</div>,
+  },
+  {
     accessorKey: "assignee",
     header: "Assignee",
     meta: "Assignee",
-    // cell: ({ row }) => <div>{row.getValue("assignee")}</div>,
+  },
+  {
+    accessorKey: "properties",
+    header: "Properties",
+    meta: "Properties",
+  },
+  {
+    accessorKey: "questionDescription",
+    header: "Question Description",
+    meta: "Question Description",
   },
   //   {
   //     accessorKey: "email",

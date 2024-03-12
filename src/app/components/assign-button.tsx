@@ -34,6 +34,8 @@ const ASSIGN_RECORDS_MUT = graphql(`
     assignRecords(assignRecordInput: $assignRecordInput) {
       _recordId
       assignee
+      updatedAt
+      updatedBy
     }
   }
 `);

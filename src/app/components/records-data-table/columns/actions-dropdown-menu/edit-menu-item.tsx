@@ -31,6 +31,8 @@ const UPDATE_Q_OR_A_MUT = graphql(`
       _recordId
       question
       answer
+      updatedAt
+      updatedBy
     }
   }
 `);

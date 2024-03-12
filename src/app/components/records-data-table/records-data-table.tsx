@@ -43,7 +43,11 @@ interface DataTableProps {
 export default function RecordsDataTable({ data, columns }: DataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+    _companyId: false,
+    createdBy: false,
+    createdAt: false,
+  });
   const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({

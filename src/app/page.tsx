@@ -9,16 +9,22 @@ const ALL_RECORDS_QUERY = graphql(`
   query AllRecords {
     records {
       _recordId
+      _companyId
+      companyName
       question
       answer
       createdBy
       createdAt
+      updatedBy
+      updatedAt
       assignee
+      properties
+      questionDescription
     }
   }
 `);
 
-export default function DemoPage() {
+export default function HomePage() {
   const { data: allRecordsQuery } = useSuspenseQuery(ALL_RECORDS_QUERY, {
     context: { fetchOptions: { cache: "no-store" } },
   });
