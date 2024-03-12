@@ -110,6 +110,11 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
     header: "Updated At",
     meta: "Updated At",
     cell: ({ row }) => <div>{formatDateTime(row.getValue("updatedAt"))}</div>,
+    sortingFn: (rowA, rowB) => {
+      const dateA = new Date(rowA.getValue("updatedAt")).getTime();
+      const dateB = new Date(rowB.getValue("updatedAt")).getTime();
+      return dateA - dateB;
+    },
   },
   {
     accessorKey: "assignee",
