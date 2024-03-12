@@ -91,7 +91,7 @@ export default function AssignButton({ selectedRows }: AssignButtonProps) {
         </DialogHeader>
 
         <form onSubmit={onSubmit}>
-          <div className="my-4">
+          <div className="mb-4">
             <Label htmlFor="assigneeEmail">Assignee Email *</Label>
             <Input
               id="assigneeEmail"
