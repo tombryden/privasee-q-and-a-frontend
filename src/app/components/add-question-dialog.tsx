@@ -46,7 +46,7 @@ export default function AddQuestionDialog() {
     reset,
   } = useForm<AddQuestionForm>();
 
-  const [createRecordMut, { loading, client }] = useMutation(CREATE_RECORD_MUT);
+  const [createRecordMut, { loading }] = useMutation(CREATE_RECORD_MUT);
 
   const onSubmit = handleSubmit((formData) => {
     const { question, answer, createdBy, assignee } = formData;
