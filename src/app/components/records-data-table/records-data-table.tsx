@@ -107,7 +107,7 @@ export default function RecordsDataTable({ data, columns }: DataTableProps) {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <AssignButton />
+          <AssignButton selectedRows={table.getSelectedRowModel().rows} />
 
           <AddQuestionDialog />
         </div>
