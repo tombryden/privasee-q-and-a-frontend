@@ -38,13 +38,21 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
     accessorKey: "question",
     header: "Question",
     meta: "Question",
-    // cell: ({ row }) => <div>{row.getValue("question")}</div>,
+    cell: ({ row }) => (
+      <div className="whitespace-pre-wrap w-[400px]">
+        {row.getValue("question")}
+      </div>
+    ),
   },
   {
     accessorKey: "answer",
     header: "Answer",
     meta: "Answer",
-    // cell: ({ row }) => <div>{row.getValue("answer")}</div>,
+    cell: ({ row }) => (
+      <div className="whitespace-pre-wrap w-[400px]">
+        {row.getValue("answer")}
+      </div>
+    ),
   },
   {
     accessorKey: "createdBy",

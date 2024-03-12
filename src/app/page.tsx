@@ -24,7 +24,7 @@ export default function DemoPage() {
   });
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="mx-auto px-10">
       {allRecordsQuery.records && (
         <RecordsDataTable columns={columns} data={allRecordsQuery.records} />
       )}
