@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { graphql } from "@/gql";
 import { AllRecordsDocument } from "@/gql/graphql";
+import { emailMessage, emailRegex, fieldRequiredMessage } from "@/utils/regex";
 import { useMutation } from "@apollo/client";
 import { Plus } from "lucide-react";
 import { useState } from "react";
@@ -61,7 +62,8 @@ export default function AddQuestionDialog() {
       },
       awaitRefetchQueries: true,
       refetchQueries: [AllRecordsDocument],
-      onCompleted: (data) => {
+      onCompleted: () => {
+        // this could be optimised to add record to cache instead of refetching, but ok for this exercise
         setOpen(false);
 
         // reset fields 500 ms after closing so no flicker on fields
@@ -96,7 +98,7 @@ export default function AddQuestionDialog() {
               <Textarea
                 id="question"
                 placeholder="Enter a question"
-                {...register("question", { required: "Field required" })}
+                {...register("question", { required: fieldRequiredMessage })}
                 error={errors.question?.message}
               />
             </div>
@@ -115,7 +117,10 @@ export default function AddQuestionDialog() {
               <Input
                 id="createdBy"
                 placeholder="Created by email"
-                {...register("createdBy", { required: "Field required" })}
+                {...register("createdBy", {
+                  required: fieldRequiredMessage,
+                  pattern: { value: emailRegex, message: emailMessage },
+                })}
                 error={errors.createdBy?.message}
               />
             </div>
@@ -125,7 +130,9 @@ export default function AddQuestionDialog() {
               <Input
                 id="assignee"
                 placeholder="Assignee email"
-                {...register("assignee")}
+                {...register("assignee", {
+                  pattern: { value: emailRegex, message: emailMessage },
+                })}
                 error={errors.assignee?.message}
               />
             </div>
