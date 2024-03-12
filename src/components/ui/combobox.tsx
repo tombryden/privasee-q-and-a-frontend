@@ -27,12 +27,14 @@ interface ComboboxProps {
   comboValues: ComboValues[];
   searchingFor: string;
   selectAction: (selectedValues: string[]) => void;
+  buttonText: string;
 }
 
 export function Combobox({
   comboValues,
   searchingFor,
   selectAction,
+  buttonText,
 }: ComboboxProps) {
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState<Array<string>>([]);
@@ -46,7 +48,7 @@ export function Combobox({
           aria-expanded={open}
           className={values.length > 0 ? "border border-primary" : ""}
         >
-          Assignee <ArrowDown className="ml-2 h-4 w-4" />
+          {buttonText} <ArrowDown className="ml-2 h-4 w-4" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">

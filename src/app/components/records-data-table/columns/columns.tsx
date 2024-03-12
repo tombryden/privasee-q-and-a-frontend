@@ -6,6 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import ActionsDropdownMenu from "./actions-dropdown-menu/actions-dropdown-menu";
 import { formatDateTime } from "@/utils/date";
 import { Combobox } from "../../../../components/ui/combobox";
+import { PropertiesDropdownMenu } from "./properties-dropdown-menu";
 
 export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
   {
@@ -123,6 +124,7 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
 
       return (
         <Combobox
+          buttonText="Assignee"
           searchingFor="assignees"
           comboValues={comboValues}
           selectAction={
@@ -141,7 +143,34 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
   },
   {
     accessorKey: "properties",
-    header: "Properties",
+    header: ({ table }) => {
+      const properties = table
+        .getCoreRowModel()
+        .rows.filter((row) => row.getValue("properties") !== null)
+        .map((row) => row.getValue("properties") as string);
+
+      // now map properties into map: key: [property1, property2]
+      const propertiesMap = new Map<string, Array<string>>();
+      for (const propertiesSingular of properties) {
+        // propertiesSingular EG: a:property,another:property
+        const propertiesArr = propertiesSingular.split(",");
+        for (const propertyKeyValPair of propertiesArr) {
+          const splitter = propertyKeyValPair.split(":");
+          const key = splitter[0];
+          const value = splitter[1];
+
+          if (!key || !value) continue;
+
+          if (propertiesMap.has(key)) {
+            propertiesMap.get(key)?.push(value);
+          } else {
+            propertiesMap.set(key, [value]);
+          }
+        }
+      }
+
+      return <PropertiesDropdownMenu properties={propertiesMap} />;
+    },
     meta: "Properties",
   },
   //   {
