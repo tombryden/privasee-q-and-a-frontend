@@ -7,29 +7,6 @@ import ActionsDropdownMenu from "./actions-dropdown-menu/actions-dropdown-menu";
 import { formatDateTime } from "@/utils/date";
 import { Combobox } from "../../../../components/ui/combobox";
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
-
 export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
   {
     id: "select",
@@ -76,6 +53,16 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
     cell: ({ row }) => (
       <div className="whitespace-pre-wrap w-[400px]">
         {row.getValue("question")}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "questionDescription",
+    header: "Question Description",
+    meta: "Question Description",
+    cell: ({ row }) => (
+      <div className="whitespace-pre-wrap w-[400px]">
+        {row.getValue("questionDescription")}
       </div>
     ),
   },
@@ -157,11 +144,6 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
     header: "Properties",
     meta: "Properties",
   },
-  {
-    accessorKey: "questionDescription",
-    header: "Question Description",
-    meta: "Question Description",
-  },
   //   {
   //     accessorKey: "email",
   //     header: ({ column }) => {
@@ -176,21 +158,6 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
   //       );
   //     },
   //     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
-  //   },
-  //   {
-  //     accessorKey: "amount",
-  //     header: () => <div className="text-right">Amount</div>,
-  //     cell: ({ row }) => {
-  //       const amount = parseFloat(row.getValue("amount"));
-
-  //       // Format the amount as a dollar amount
-  //       const formatted = new Intl.NumberFormat("en-US", {
-  //         style: "currency",
-  //         currency: "USD",
-  //       }).format(amount);
-
-  //       return <div className="text-right font-medium">{formatted}</div>;
-  //     },
   //   },
   {
     id: "actions",

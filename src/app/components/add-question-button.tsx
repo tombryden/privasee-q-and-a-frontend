@@ -24,6 +24,7 @@ import { toast } from "sonner";
 
 interface AddQuestionForm {
   question: string;
+  questionDescription: string;
   answer: string;
   createdBy: string;
   assignee: string;
@@ -50,12 +51,14 @@ export default function AddQuestionButton() {
   const [createRecordMut, { loading }] = useMutation(CREATE_RECORD_MUT);
 
   const onSubmit = handleSubmit((formData) => {
-    const { question, answer, createdBy, assignee } = formData;
+    const { question, questionDescription, answer, createdBy, assignee } =
+      formData;
 
     createRecordMut({
       variables: {
         createRecordInput: {
           question,
+          questionDescription: questionDescription || undefined,
           answer: answer || undefined, // allow null values to hit backend
           createdBy,
           assignee: assignee || undefined,
@@ -106,6 +109,17 @@ export default function AddQuestionButton() {
                 error={errors.question?.message}
               />
             </div>
+
+            <div>
+              <Label htmlFor="questionDescription">Question Description</Label>
+              <Textarea
+                id="questionDescription"
+                placeholder="Enter a description"
+                {...register("questionDescription")}
+                error={errors.questionDescription?.message}
+              />
+            </div>
+
             <div>
               <Label htmlFor="answer">Answer</Label>
               <Textarea

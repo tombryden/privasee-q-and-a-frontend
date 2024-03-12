@@ -28,6 +28,7 @@ export type CreateRecordInput = {
   assignee?: InputMaybe<Scalars['String']['input']>;
   createdBy: Scalars['String']['input'];
   question: Scalars['String']['input'];
+  questionDescription?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Mutation = {
