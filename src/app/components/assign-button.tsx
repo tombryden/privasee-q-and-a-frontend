@@ -19,6 +19,7 @@ import { useMutation } from "@apollo/client";
 import { Row } from "@tanstack/react-table";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 interface AssignButtonProps {
   selectedRows: Row<AllRecordsQuery["records"][0]>[];
@@ -61,6 +62,8 @@ export default function AssignButton({ selectedRows }: AssignButtonProps) {
         },
       },
       onCompleted: () => {
+        toast(`Successfully assigned ${selectedCount} records.`);
+
         setOpen(false);
 
         // reset fields after 500ms to stop flash

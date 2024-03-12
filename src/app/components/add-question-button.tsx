@@ -20,6 +20,7 @@ import { useMutation } from "@apollo/client";
 import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 interface AddQuestionForm {
   question: string;
@@ -36,7 +37,7 @@ const CREATE_RECORD_MUT = graphql(`
   }
 `);
 
-export default function AddQuestionDialog() {
+export default function AddQuestionButton() {
   const [open, setOpen] = useState(false);
 
   const {
@@ -55,14 +56,16 @@ export default function AddQuestionDialog() {
       variables: {
         createRecordInput: {
           question,
-          answer,
+          answer: answer || undefined, // allow null values to hit backend
           createdBy,
-          assignee,
+          assignee: assignee || undefined,
         },
       },
       awaitRefetchQueries: true,
       refetchQueries: [AllRecordsDocument],
       onCompleted: () => {
+        toast("Successfully added a new question.");
+
         // this could be optimised to add record to cache instead of refetching, but ok for this exercise
         setOpen(false);
 

@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={`${inter.className}`}>
         <ApolloWrapper>
           {children}
-          <Toaster />
+          <Toaster toastOptions={{ className: inter.className }} />
         </ApolloWrapper>
       </body>
     </html>

@@ -32,8 +32,8 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { AllRecordsQuery } from "@/gql/graphql";
-import AddQuestionDialog from "../add-question-dialog";
 import AssignButton from "../assign-button";
+import AddQuestionButton from "../add-question-button";
 
 interface DataTableProps {
   data: AllRecordsQuery["records"];
@@ -109,7 +109,7 @@ export default function RecordsDataTable({ data, columns }: DataTableProps) {
 
           <AssignButton selectedRows={table.getSelectedRowModel().rows} />
 
-          <AddQuestionDialog />
+          <AddQuestionButton />
         </div>
       </div>
       <div className="rounded-md border">
