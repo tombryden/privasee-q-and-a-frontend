@@ -42,7 +42,7 @@ const MainTable = () => {
           {/* <Button className="mb-10">Add Question</Button> */}
           <AddQuestionDialog />
 
-          <div className="max-h-[80vh] overflow-scroll">
+          <div className="max-h-[70vh] overflow-scroll">
             <Table>
               <TableHeader>
                 <TableRow>
