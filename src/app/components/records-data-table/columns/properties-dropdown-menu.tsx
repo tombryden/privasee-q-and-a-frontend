@@ -15,7 +15,6 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
-  DropdownMenuItem,
   DropdownMenuPortal,
   DropdownMenuSub,
   DropdownMenuSubContent,
@@ -27,10 +26,12 @@ import { useMemo, useState } from "react";
 interface PropertiesDropdownMenuProps {
   /** Properties in map form. Key: [value1, value2] */
   properties: Map<string, Array<string>>;
+  selectAction: (selectedValues: string[]) => void; // selected values of properties, eg ["vendor:IBM", "example:property"]
 }
 
 export function PropertiesDropdownMenu({
   properties,
+  selectAction,
 }: PropertiesDropdownMenuProps) {
   // memod properties key array for efficiency
   const propertyKeys = useMemo(() => {
@@ -46,7 +47,10 @@ export function PropertiesDropdownMenu({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost">
+        <Button
+          variant="ghost"
+          className={values.length > 0 ? "border border-primary" : undefined}
+        >
           Properties <ArrowDown className="ml-2 h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
@@ -67,18 +71,15 @@ export function PropertiesDropdownMenu({
                         key={propertyValue}
                         onSelect={(e) => e.preventDefault()}
                         checked={checked}
-                        onCheckedChange={(newChecked) =>
-                          !newChecked
-                            ? setValues((prevValues) =>
-                                prevValues.filter(
-                                  (val) => val !== propertyJoinedText
-                                )
-                              )
-                            : setValues((prevValues) => [
-                                ...prevValues,
-                                propertyJoinedText,
-                              ])
-                        }
+                        onCheckedChange={(newChecked) => {
+                          const newValues = !newChecked
+                            ? values.filter((val) => val !== propertyJoinedText)
+                            : [...values, propertyJoinedText];
+
+                          setValues(newValues);
+
+                          selectAction(newValues);
+                        }}
                       >
                         <span>{propertyValue}</span>
                       </DropdownMenuCheckboxItem>

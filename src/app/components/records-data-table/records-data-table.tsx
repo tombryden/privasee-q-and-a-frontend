@@ -74,10 +74,6 @@ export default function RecordsDataTable({ data, columns }: DataTableProps) {
     },
   });
 
-  // useEffect(() => {
-  //   table.setColumnFilters([{ id: "assignee", value: "tom@assigned.com" }]);
-  // }, [table]);
-
   return (
     <div className="w-full">
       <div className="flex items-center py-4">

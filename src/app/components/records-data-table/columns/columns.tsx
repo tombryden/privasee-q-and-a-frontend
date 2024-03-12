@@ -8,6 +8,28 @@ import { formatDateTime } from "@/utils/date";
 import { Combobox } from "../../../../components/ui/combobox";
 import { PropertiesDropdownMenu } from "./properties-dropdown-menu";
 
+function setColumnFiltersNoOverride(
+  table: any,
+  selectedValues: any,
+  columnId: string
+) {
+  // don't override column filters
+  let currentColumnFilters = table.getState().columnFilters;
+
+  // remove colid from filters
+  currentColumnFilters = currentColumnFilters.filter(
+    (filterObj: any) => filterObj.id !== columnId
+  );
+
+  table.setColumnFilters([
+    ...currentColumnFilters,
+    {
+      id: columnId,
+      value: selectedValues.length > 0 ? selectedValues : undefined,
+    },
+  ]);
+}
+
 export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
   {
     id: "select",
@@ -127,14 +149,8 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
           buttonText="Assignee"
           searchingFor="assignees"
           comboValues={comboValues}
-          selectAction={
-            (selectedValues) =>
-              table.setColumnFilters([
-                {
-                  id: "assignee",
-                  value: selectedValues.length > 0 ? selectedValues : undefined,
-                },
-              ]) // custom filter function
+          selectAction={(selectedValues) =>
+            setColumnFiltersNoOverride(table, selectedValues, "assignee")
           }
         />
       );
@@ -143,6 +159,23 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
   },
   {
     accessorKey: "properties",
+    filterFn: (row, columnId, filterVal) => {
+      // get current properties vendor:IBM,example:property
+      const properties = row.getValue(columnId) as string;
+
+      if (properties === null) return false;
+
+      // split properties into array and see if they match the selected values array in any order
+      const propertiesArr = properties.split(",");
+
+      // loop through values and see if they are in properties array
+      for (const propertyKeyValue of filterVal) {
+        if (propertiesArr.includes(propertyKeyValue)) return true;
+      }
+
+      return false;
+    },
+
     header: ({ table }) => {
       const properties = table
         .getCoreRowModel()
@@ -169,7 +202,15 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
         }
       }
 
-      return <PropertiesDropdownMenu properties={propertiesMap} />;
+      return (
+        <PropertiesDropdownMenu
+          properties={propertiesMap}
+          // custom filter fn on to detect records based on selected values array ["example:val", "another:property"]
+          selectAction={(selectedValues) =>
+            setColumnFiltersNoOverride(table, selectedValues, "properties")
+          }
+        />
+      );
     },
     meta: "Properties",
   },
