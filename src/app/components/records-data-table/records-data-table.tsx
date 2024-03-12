@@ -47,6 +47,9 @@ export default function RecordsDataTable({ data, columns }: DataTableProps) {
     _companyId: false,
     createdBy: false,
     createdAt: false,
+    companyName: false,
+    updatedBy: false,
+    questionDescription: false,
   });
   const [rowSelection, setRowSelection] = useState({});
 
@@ -98,7 +101,6 @@ export default function RecordsDataTable({ data, columns }: DataTableProps) {
                   return (
                     <DropdownMenuCheckboxItem
                       key={column.id}
-                      className="capitalize"
                       checked={column.getIsVisible()}
                       onCheckedChange={(value) =>
                         column.toggleVisibility(!!value)
