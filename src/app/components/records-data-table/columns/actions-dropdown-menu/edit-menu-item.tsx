@@ -55,7 +55,6 @@ export default function EditMenuItem({
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<UpdateForm>({
     defaultValues: {
       question: record.question,
@@ -69,7 +68,7 @@ export default function EditMenuItem({
         updateQuestionOrAnswerInput: {
           recordId: record._recordId,
           question: formData.question,
-          answer: formData.answer || undefined,
+          answer: formData.answer,
         },
       },
       onCompleted: () => {
