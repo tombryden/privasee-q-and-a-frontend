@@ -191,7 +191,8 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
           if (!key || !value) continue;
 
           if (propertiesMap.has(key)) {
-            propertiesMap.get(key)?.push(value);
+            if (!propertiesMap.get(key)?.includes(value))
+              propertiesMap.get(key)?.push(value);
           } else {
             propertiesMap.set(key, [value]);
           }
