@@ -34,9 +34,11 @@ export type CreateRecordInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  /** Bulk assign records to an email */
   assignRecords: Array<Record>;
   /** Create a new question/answer record */
   createRecord: Record;
+  /** Update records with new information */
   updateRecord: Record;
 };
 
@@ -68,6 +70,12 @@ export type QueryRecordArgs = {
   recordId: Scalars['ID']['input'];
 };
 
+
+export type QueryRecordsArgs = {
+  searchTerm?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Represents a row in the Question / Answers Airtable sheet */
 export type Record = {
   __typename?: 'Record';
   _companyId: Scalars['ID']['output'];
@@ -113,7 +121,9 @@ export type UpdateRecordMutationVariables = Exact<{
 
 export type UpdateRecordMutation = { __typename?: 'Mutation', updateRecord: { __typename?: 'Record', _recordId: string, question: string, answer?: string | null, updatedAt: any, updatedBy: string, properties?: string | null, questionDescription?: string | null } };
 
-export type AllRecordsQueryVariables = Exact<{ [key: string]: never; }>;
+export type AllRecordsQueryVariables = Exact<{
+  searchTerm?: InputMaybe<Scalars['String']['input']>;
+}>;
 
 
 export type AllRecordsQuery = { __typename?: 'Query', records: Array<{ __typename?: 'Record', _recordId: string, _companyId: string, companyName: string, question: string, answer?: string | null, createdBy: string, createdAt: any, updatedBy: string, updatedAt: any, assignee?: string | null, properties?: string | null, questionDescription?: string | null }> };
@@ -122,4 +132,4 @@ export type AllRecordsQuery = { __typename?: 'Query', records: Array<{ __typenam
 export const CreateRecord2Document = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createRecord2"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"createRecordInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateRecordInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createRecord"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"createRecordInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"createRecordInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_recordId"}}]}}]}}]} as unknown as DocumentNode<CreateRecord2Mutation, CreateRecord2MutationVariables>;
 export const AssignRecordsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"assignRecords"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"assignRecordInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AssignRecordInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"assignRecords"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"assignRecordInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"assignRecordInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_recordId"}},{"kind":"Field","name":{"kind":"Name","value":"assignee"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedBy"}}]}}]}}]} as unknown as DocumentNode<AssignRecordsMutation, AssignRecordsMutationVariables>;
 export const UpdateRecordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"updateRecord"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"updateRecordInput"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateRecordInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateRecord"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"updateRecordInput"},"value":{"kind":"Variable","name":{"kind":"Name","value":"updateRecordInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_recordId"}},{"kind":"Field","name":{"kind":"Name","value":"question"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedBy"}},{"kind":"Field","name":{"kind":"Name","value":"properties"}},{"kind":"Field","name":{"kind":"Name","value":"questionDescription"}}]}}]}}]} as unknown as DocumentNode<UpdateRecordMutation, UpdateRecordMutationVariables>;
-export const AllRecordsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllRecords"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"records"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_recordId"}},{"kind":"Field","name":{"kind":"Name","value":"_companyId"}},{"kind":"Field","name":{"kind":"Name","value":"companyName"}},{"kind":"Field","name":{"kind":"Name","value":"question"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedBy"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"assignee"}},{"kind":"Field","name":{"kind":"Name","value":"properties"}},{"kind":"Field","name":{"kind":"Name","value":"questionDescription"}}]}}]}}]} as unknown as DocumentNode<AllRecordsQuery, AllRecordsQueryVariables>;
+export const AllRecordsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllRecords"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"searchTerm"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"records"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"searchTerm"},"value":{"kind":"Variable","name":{"kind":"Name","value":"searchTerm"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"_recordId"}},{"kind":"Field","name":{"kind":"Name","value":"_companyId"}},{"kind":"Field","name":{"kind":"Name","value":"companyName"}},{"kind":"Field","name":{"kind":"Name","value":"question"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedBy"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}},{"kind":"Field","name":{"kind":"Name","value":"assignee"}},{"kind":"Field","name":{"kind":"Name","value":"properties"}},{"kind":"Field","name":{"kind":"Name","value":"questionDescription"}}]}}]}}]} as unknown as DocumentNode<AllRecordsQuery, AllRecordsQueryVariables>;

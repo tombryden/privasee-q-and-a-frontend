@@ -30,18 +30,33 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
-import { AllRecordsQuery } from "@/gql/graphql";
+import { useEffect, useRef, useState } from "react";
+import { AllRecordsQuery, Exact, InputMaybe } from "@/gql/graphql";
 import AssignButton from "../assign-button";
 import AddQuestionButton from "../add-question-button";
 import { cn } from "@/lib/utils";
+import { ApolloQueryResult } from "@apollo/client";
+import { Spinner } from "@/components/ui/spinner";
 
 interface DataTableProps {
   data: AllRecordsQuery["records"];
   columns: ColumnDef<AllRecordsQuery["records"][0]>[];
+  refetchAllRecords: (
+    variables?:
+      | Partial<
+          Exact<{
+            searchTerm?: InputMaybe<string> | undefined;
+          }>
+        >
+      | undefined
+  ) => Promise<ApolloQueryResult<AllRecordsQuery>>;
 }
 
-export default function RecordsDataTable({ data, columns }: DataTableProps) {
+export default function RecordsDataTable({
+  data,
+  columns,
+  refetchAllRecords,
+}: DataTableProps) {
   const [sorting, setSorting] = useState<SortingState>([
     { id: "updatedAt", desc: true },
   ]);
@@ -75,20 +90,50 @@ export default function RecordsDataTable({ data, columns }: DataTableProps) {
     },
   });
 
+  // #region - could be moved to its own component, but for now.. leave here
+  const [search, setSearch] = useState("");
+  const [searchLoading, setSearchLoading] = useState(false);
+  const doneInitialLoad = useRef(0);
+
+  // search after 1s stopping typing
+  useEffect(() => {
+    doneInitialLoad.current += 1;
+
+    // stop search from occuring on initial load as we already prefetched data
+    // NOTE: THIS WOULD NEED CHANGING IN PROD DUE TO STRICTMODE ON LOCALHOST
+    if (doneInitialLoad.current <= 2) return;
+
+    setSearchLoading(true);
+
+    const timeout = setTimeout(() => {
+      refetchAllRecords({
+        searchTerm: search,
+      }).then(() => setSearchLoading(false));
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [search, refetchAllRecords]);
+  // #endregion
+
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter questions..."
-          value={
-            (table.getColumn("question")?.getFilterValue() as string) || ""
-          }
-          onChange={
-            (event) =>
-              table.getColumn("question")?.setFilterValue(event.target.value) // hacky - custom filter function to check if also matches answers column
-          }
-          className="max-w-sm"
-        />
+        <div className="flex gap-4">
+          <Input
+            placeholder="Filter questions..."
+            value={
+              // (table.getColumn("question")?.getFilterValue() as string) || ""
+              search
+            }
+            onChange={(event) =>
+              // table.getColumn("question")?.setFilterValue(event.target.value) // hacky - custom filter function to check if also matches answers column
+              setSearch(event.target.value)
+            }
+            className="max-w-sm"
+          />
+
+          {searchLoading && <Spinner />}
+        </div>
         <div className="ml-auto space-x-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
