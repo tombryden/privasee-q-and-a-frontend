@@ -8,28 +8,6 @@ import { formatDateTime } from "@/utils/date";
 import { Combobox } from "../../../../components/ui/combobox";
 import { PropertiesDropdownMenu } from "./properties-dropdown-menu";
 
-function setColumnFiltersNoOverride(
-  table: any,
-  selectedValues: any,
-  columnId: string
-) {
-  // don't override column filters
-  let currentColumnFilters = table.getState().columnFilters;
-
-  // remove colid from filters
-  currentColumnFilters = currentColumnFilters.filter(
-    (filterObj: any) => filterObj.id !== columnId
-  );
-
-  table.setColumnFilters([
-    ...currentColumnFilters,
-    {
-      id: columnId,
-      value: selectedValues.length > 0 ? selectedValues : undefined,
-    },
-  ]);
-}
-
 export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
   {
     id: "select",
@@ -76,6 +54,21 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
     cell: ({ row }) => (
       <div className="whitespace-pre-wrap">{row.getValue("question")}</div>
     ),
+    // bit hacky but filter returns true if the searched field is in question OR answer column
+    // so by setting filter value of question column, it also searches answer column
+    filterFn: (row, columnId, filterVal) => {
+      const questionColValue = row.getValue(columnId) as string;
+      const answerColValue = row.getValue("answer") as string;
+
+      if (!questionColValue || !answerColValue) return false;
+
+      return (
+        questionColValue
+          .toLowerCase()
+          .includes(String(filterVal).toLowerCase()) ||
+        answerColValue.toLowerCase().includes(String(filterVal).toLowerCase())
+      );
+    },
   },
   {
     accessorKey: "questionDescription",
@@ -146,7 +139,11 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
           searchingFor="assignees"
           comboValues={comboValues}
           selectAction={(selectedValues) =>
-            setColumnFiltersNoOverride(table, selectedValues, "assignee")
+            table
+              .getColumn("assignee")
+              ?.setFilterValue(
+                selectedValues.length > 0 ? selectedValues : undefined
+              )
           }
         />
       );
@@ -205,7 +202,11 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
           properties={propertiesMap}
           // custom filter fn on to detect records based on selected values array ["example:val", "another:property"]
           selectAction={(selectedValues) =>
-            setColumnFiltersNoOverride(table, selectedValues, "properties")
+            table
+              .getColumn("properties")
+              ?.setFilterValue(
+                selectedValues.length > 0 ? selectedValues : undefined
+              )
           }
         />
       );

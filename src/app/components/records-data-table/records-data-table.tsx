@@ -81,12 +81,12 @@ export default function RecordsDataTable({ data, columns }: DataTableProps) {
         <Input
           placeholder="Filter questions..."
           value={
-            (table.getColumn("question")?.getFilterValue() as string) ?? ""
+            (table.getColumn("question")?.getFilterValue() as string) || ""
           }
-          onChange={(event) => {
-            table.getColumn("question")?.setFilterValue(event.target.value);
-            // table.getColumn("answer")?.setFilterValue(event.target.value);
-          }}
+          onChange={
+            (event) =>
+              table.getColumn("question")?.setFilterValue(event.target.value) // hacky - custom filter function to check if also matches answers column
+          }
           className="max-w-sm"
         />
         <div className="ml-auto space-x-4">
