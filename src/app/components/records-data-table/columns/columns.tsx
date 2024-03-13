@@ -191,6 +191,7 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
           if (!key || !value) continue;
 
           if (propertiesMap.has(key)) {
+            // add if not already in the map value array
             if (!propertiesMap.get(key)?.includes(value))
               propertiesMap.get(key)?.push(value);
           } else {
