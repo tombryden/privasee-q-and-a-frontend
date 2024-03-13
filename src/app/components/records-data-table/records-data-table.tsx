@@ -121,14 +121,8 @@ export default function RecordsDataTable({
         <div className="flex gap-4">
           <Input
             placeholder="Filter questions..."
-            value={
-              // (table.getColumn("question")?.getFilterValue() as string) || ""
-              search
-            }
-            onChange={(event) =>
-              // table.getColumn("question")?.setFilterValue(event.target.value) // hacky - custom filter function to check if also matches answers column
-              setSearch(event.target.value)
-            }
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
             className="max-w-sm"
           />
 

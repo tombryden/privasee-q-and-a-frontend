@@ -54,21 +54,6 @@ export const columns: ColumnDef<AllRecordsQuery["records"][0]>[] = [
     cell: ({ row }) => (
       <div className="whitespace-pre-wrap">{row.getValue("question")}</div>
     ),
-    // bit hacky but filter returns true if the searched field is in question OR answer column
-    // so by setting filter value of question column, it also searches answer column
-    filterFn: (row, columnId, filterVal) => {
-      const questionColValue = row.getValue(columnId) as string;
-      const answerColValue = row.getValue("answer") as string;
-
-      if (!questionColValue || !answerColValue) return false;
-
-      return (
-        questionColValue
-          .toLowerCase()
-          .includes(String(filterVal).toLowerCase()) ||
-        answerColValue.toLowerCase().includes(String(filterVal).toLowerCase())
-      );
-    },
   },
   {
     accessorKey: "questionDescription",
