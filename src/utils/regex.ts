@@ -3,3 +3,6 @@ export const emailRegex =
 export const emailMessage = "Must be a valid email";
 
 export const fieldRequiredMessage = "Field required";
+
+export const propertiesRegex = /(\w+:\w+,?)+/;
+export const propertiesMessage = "Invalid properties format";

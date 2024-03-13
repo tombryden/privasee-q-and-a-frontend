@@ -27,6 +27,7 @@ export type CreateRecordInput = {
   answer?: InputMaybe<Scalars['String']['input']>;
   assignee?: InputMaybe<Scalars['String']['input']>;
   createdBy: Scalars['String']['input'];
+  properties?: InputMaybe<Scalars['String']['input']>;
   question: Scalars['String']['input'];
   questionDescription?: InputMaybe<Scalars['String']['input']>;
 };

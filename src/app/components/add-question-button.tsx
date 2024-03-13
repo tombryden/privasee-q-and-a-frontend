@@ -15,7 +15,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { graphql } from "@/gql";
 import { AllRecordsDocument } from "@/gql/graphql";
-import { emailMessage, emailRegex, fieldRequiredMessage } from "@/utils/regex";
+import {
+  emailMessage,
+  emailRegex,
+  fieldRequiredMessage,
+  propertiesMessage,
+  propertiesRegex,
+} from "@/utils/regex";
 import { useMutation } from "@apollo/client";
 import { Plus } from "lucide-react";
 import { useState } from "react";
@@ -28,6 +34,7 @@ interface AddQuestionForm {
   answer: string;
   createdBy: string;
   assignee: string;
+  properties: string;
 }
 
 const CREATE_RECORD_MUT = graphql(`
@@ -51,8 +58,14 @@ export default function AddQuestionButton() {
   const [createRecordMut, { loading }] = useMutation(CREATE_RECORD_MUT);
 
   const onSubmit = handleSubmit((formData) => {
-    const { question, questionDescription, answer, createdBy, assignee } =
-      formData;
+    const {
+      question,
+      questionDescription,
+      answer,
+      createdBy,
+      assignee,
+      properties,
+    } = formData;
 
     createRecordMut({
       variables: {
@@ -62,6 +75,7 @@ export default function AddQuestionButton() {
           answer: answer || undefined, // allow null values to hit backend
           createdBy,
           assignee: assignee || undefined,
+          properties: properties || undefined,
         },
       },
       awaitRefetchQueries: true,
@@ -152,6 +166,23 @@ export default function AddQuestionButton() {
                   pattern: { value: emailRegex, message: emailMessage },
                 })}
                 error={errors.assignee?.message}
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="properties">
+                Properties (in format &apos;key:value,key2:value2&apos;)
+              </Label>
+              <Input
+                id="properties"
+                placeholder="Enter properties"
+                {...register("properties", {
+                  pattern: {
+                    value: propertiesRegex,
+                    message: propertiesMessage,
+                  },
+                })}
+                error={errors.properties?.message}
               />
             </div>
           </div>
